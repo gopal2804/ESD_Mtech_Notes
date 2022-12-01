@@ -1,0 +1,26 @@
+1)select fname as First from employee order by fname;
+2)select fname from employee where fname like '%s%' order by fname;
+3)select fname,lname,salary from employee where salary>=25000 order by lname;
+4)select distinct plocation from project order by plocation;
+5)select * from employee where sex='M' and year(bdate)>1950 order by salary;
+6)select fname,lname,bdate,salary from employee where super_ssn is null or salary<30000 order by bdate desc;
+7)select * from employee where salary between 30000 and 50000 and sex='F' order by dno;
+8)select fname from employee where ssn not in(select essn from dependent) order by fname;
+9)select min(salary) from employee where dno=(select dnumber from department where dname='Research');
+
+10)select sum(hours),pno from works_on p where essn in (select ssn from employee where dno=(select dnumber from department where dname='Research')) group by pno order by pno;   // doubt
+
+11)select timestampdiff(year,bdate,CURDATE()) as age from employee order by age;
+12)select essn,sum(hours) from works_on group by essn having avg(hours)>=10 order by essn;
+13)select fname from employee e where salary>(select avg(salary) from employee where e.dno=dno) order by fname;
+14)select sex,sum(salary) from employee group by sex order by sex;
+15)select count(*) from employee where dno=5;
+16)select ssn,sum(hours) from employee left outer join works_on on essn=ssn group by ssn order by ssn ;
+17)select min(salary) from employee where dno=(select dnumber from department where dname='Administration');
+18)select dno,count(ssn) from employee where salary>30000 group by dno order by dno;
+19)select essn from dependent group by essn having count(essn)>1 order by essn;
+20)select essn,count(pno) from works_on group by essn having count(essn)>1 order by essn;
+21)select ssn , fname,dname from employee,department where dno=dnumber order by ssn;
+22)select ssn,fname from employee where dno in (select dnum from project where plocation='Houston') order by ssn;
+23)select lname from employee where ssn in (select essn from dependent where sex='M') order by lname;
+24)select lname from employee where ssn in (select essn from dependent where sex='F') order by lname;

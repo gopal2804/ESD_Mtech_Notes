@@ -1,0 +1,550 @@
+(base) gopal@gopal-ROG-Strix-G512LI-G512LI:~$ sudo mysql -u root -p
+[sudo] password for gopal: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.31-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database companydb;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| companydb          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use companydb;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> source full_path_of_sql_file;
+ERROR: 
+Failed to open file 'full_path_of_sql_file', error: 2
+mysql> source full_path_of_sql_file
+ERROR: 
+Failed to open file 'full_path_of_sql_file', error: 2
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table employee(fname varchar(30), minit char(1), lname varchar(30), ssn char(9), bdate date, address varchar(30), sex char(1), salary decimal(10,2), super_ssn char(9), dno smallinit, constraint pk_employee PRIMARY KEY(ssn));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'smallinit, constraint pk_employee PRIMARY KEY(ssn))' at line 1
+mysql> create table employee(fname varchar(30), minit char(1), lname varchar(30), ssn char(9), bdate date, address varchar(30), sex char(1), salary decimal(10,2), super_ssn char(9), dno number, constrain
+t pk_employee PRIMARY KEY(ssn));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number, constraint pk_employee PRIMARY KEY(ssn))' at line 1
+mysql> create table employee(fname varchar(30), minit char(1), lname varchar(30), ssn char(9) primary key, bdate date, address varchar(30), sex char(1), salary decimal(10,2), super_ssn char(9), dno small
+init);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'smallinit)' at line 1
+mysql> create table employee(fname varchar(30), minit char(1), lname varchar(30), ssn char(9), bdate date, address varchar(30), sex char(1), salary decimal(10,2), super_ssn char(9), dno smallinit, PRIMARY KEY(ssn));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'smallinit, PRIMARY KEY(ssn))' at line 1
+mysql> create table employee(fname varchar(30), minit char(1), lname varchar(30), ssn char(9), bdate date, address varchar(30), sex char(1), salary decimal(10,2), super_ssn char(9), dno int, PRIMARY KEY(ssn));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| employee            |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| fname     | varchar(30)   | YES  |     | NULL    |       |
+| minit     | char(1)       | YES  |     | NULL    |       |
+| lname     | varchar(30)   | YES  |     | NULL    |       |
+| ssn       | char(9)       | NO   | PRI | NULL    |       |
+| bdate     | date          | YES  |     | NULL    |       |
+| address   | varchar(30)   | YES  |     | NULL    |       |
+| sex       | char(1)       | YES  |     | NULL    |       |
+| salary    | decimal(10,2) | YES  |     | NULL    |       |
+| super_ssn | char(9)       | YES  |     | NULL    |       |
+| dno       | int           | YES  |     | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> create table department(dname varchar(30), dnumber int, mgr_ssn char(9), mgr_start_date date, PRIMARY KEY(dnumber);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table department(dname varchar(30), dnumber int, mgr_ssn char(9), mgr_start_date date, PRIMARY KEY(dnumber));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| department          |
+| employee            |
++---------------------+
+2 rows in set (0.01 sec)
+
+mysql> desc department;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| dname          | varchar(30) | YES  |     | NULL    |       |
+| dnumber        | int         | NO   | PRI | NULL    |       |
+| mgr_ssn        | char(9)     | YES  |     | NULL    |       |
+| mgr_start_date | date        | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table dept_locations(dnumber int, dlocation varchar(30), PRIMARY KEY(dnumber,dlocation));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| department          |
+| dept_locations      |
+| employee            |
++---------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc dept_loactions;
+ERROR 1146 (42S02): Table 'companydb.dept_loactions' doesn't exist
+mysql> desc dept_locations;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dnumber   | int         | NO   | PRI | NULL    |       |
+| dlocation | varchar(30) | NO   | PRI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table project(pname varchar(30), pnumber int, plocation varchar(30), dnum int,PRIMARY KEY(pnumber));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| department          |
+| dept_locations      |
+| employee            |
+| project             |
++---------------------+
+4 rows in set (0.01 sec)
+
+mysql> desc project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| pname     | varchar(30) | YES  |     | NULL    |       |
+| pnumber   | int         | NO   | PRI | NULL    |       |
+| plocation | varchar(30) | YES  |     | NULL    |       |
+| dnum      | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table works_on(essn char(9), pno int, hours float(4,2), PRIMARY KEY(essn,pno));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| department          |
+| dept_locations      |
+| employee            |
+| project             |
+| works_on            |
++---------------------+
+5 rows in set (0.01 sec)
+
+mysql> desc works_on;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| essn  | char(9)    | NO   | PRI | NULL    |       |
+| pno   | int        | NO   | PRI | NULL    |       |
+| hours | float(4,2) | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> create table dependent(essn char(9), dependent_name varchar(30), sex char(1), bdate date, relationship varchar(20), PRIMARY KEY(essn,dependent_name));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++---------------------+
+| Tables_in_companydb |
++---------------------+
+| department          |
+| dependent           |
+| dept_locations      |
+| employee            |
+| project             |
+| works_on            |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> desc dependent;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| essn           | char(9)     | NO   | PRI | NULL    |       |
+| dependent_name | varchar(30) | NO   | PRI | NULL    |       |
+| sex            | char(1)     | YES  |     | NULL    |       |
+| bdate          | date        | YES  |     | NULL    |       |
+| relationship   | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> 
+
+
+
+
+
+mysql> alter table employee
+    -> add constraint fk_super_ssn FOREIGN KEY (super_ssn) REFERENCES employee(ssn);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| fname     | varchar(30)   | YES  |     | NULL    |       |
+| minit     | char(1)       | YES  |     | NULL    |       |
+| lname     | varchar(30)   | YES  |     | NULL    |       |
+| ssn       | char(9)       | NO   | PRI | NULL    |       |
+| bdate     | date          | YES  |     | NULL    |       |
+| address   | varchar(30)   | YES  |     | NULL    |       |
+| sex       | char(1)       | YES  |     | NULL    |       |
+| salary    | decimal(10,2) | YES  |     | NULL    |       |
+| super_ssn | char(9)       | YES  | MUL | NULL    |       |
+| dno       | int           | YES  |     | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> alter table employee(add constraint fk_dno FOREIGN KEY (dno) REFERENCES department(dnumber));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(add constraint fk_dno FOREIGN KEY (dno) REFERENCES department(dnumber))' at line 1
+mysql> alter table employee(add constraint fk_dno FOREIGN KEY (dno) REFERENCES department (dnumber));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(add constraint fk_dno FOREIGN KEY (dno) REFERENCES department (dnumber))' at line 1
+mysql> alter table employee
+    -> add constraint fk_dno FOREIGN KEY (dno) REFERENCES department(dnumber);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| fname     | varchar(30)   | YES  |     | NULL    |       |
+| minit     | char(1)       | YES  |     | NULL    |       |
+| lname     | varchar(30)   | YES  |     | NULL    |       |
+| ssn       | char(9)       | NO   | PRI | NULL    |       |
+| bdate     | date          | YES  |     | NULL    |       |
+| address   | varchar(30)   | YES  |     | NULL    |       |
+| sex       | char(1)       | YES  |     | NULL    |       |
+| salary    | decimal(10,2) | YES  |     | NULL    |       |
+| super_ssn | char(9)       | YES  | MUL | NULL    |       |
+| dno       | int           | YES  | MUL | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+10 rows in set (0.01 sec)
+
+mysql> alter table dept_locations
+    -> add constraint fk_dnumber FOREIGN KEY (dnumber) REFERENCES department(dnumber);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table project
+    -> add constraint fk_dnum FOREIGN KEY (dnum) REFERENCES department(dnumber);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table works_on
+    -> add constraint fk_essn FOREIGN KEY (essn) REFERENCES employee(ssn);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table works_on
+    -> add constraint fk_pno FOREIGN KEY (pno) REFERENCES project(pnumber);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table dependent
+    -> add constraint fk_dep_essn FOREIGN KEY (essn) REFERENCES employee(ssn);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| fname     | varchar(30)   | YES  |     | NULL    |       |
+| minit     | char(1)       | YES  |     | NULL    |       |
+| lname     | varchar(30)   | YES  |     | NULL    |       |
+| ssn       | char(9)       | NO   | PRI | NULL    |       |
+| bdate     | date          | YES  |     | NULL    |       |
+| address   | varchar(30)   | YES  |     | NULL    |       |
+| sex       | char(1)       | YES  |     | NULL    |       |
+| salary    | decimal(10,2) | YES  |     | NULL    |       |
+| super_ssn | char(9)       | YES  | MUL | NULL    |       |
+| dno       | int           | YES  | MUL | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> desc department;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| dname          | varchar(30) | YES  |     | NULL    |       |
+| dnumber        | int         | NO   | PRI | NULL    |       |
+| mgr_ssn        | char(9)     | YES  |     | NULL    |       |
+| mgr_start_date | date        | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc dept_locations;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dnumber   | int         | NO   | PRI | NULL    |       |
+| dlocation | varchar(30) | NO   | PRI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> desc project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| pname     | varchar(30) | YES  |     | NULL    |       |
+| pnumber   | int         | NO   | PRI | NULL    |       |
+| plocation | varchar(30) | YES  |     | NULL    |       |
+| dnum      | int         | YES  | MUL | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc works_on;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| essn  | char(9)    | NO   | PRI | NULL    |       |
+| pno   | int        | NO   | PRI | NULL    |       |
+| hours | float(4,2) | YES  |     | NULL    |       |
++-------+------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc dependent;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| essn           | char(9)     | NO   | PRI | NULL    |       |
+| dependent_name | varchar(30) | NO   | PRI | NULL    |       |
+| sex            | char(1)     | YES  |     | NULL    |       |
+| bdate          | date        | YES  |     | NULL    |       |
+| relationship   | varchar(20) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> 
+
+
+
+
+
+mysql> insert into department(dname,dnumber,mgr_ssn,mgr_start_date) VALUES
+    -> ('Research',5,'333445555','1988-05-22'),
+    -> ('Administration',4,'987654321','1995-05-22'),
+    -> ('Headquarters',1,'888665555','1981-05-22');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from department;
++----------------+---------+-----------+----------------+
+| dname          | dnumber | mgr_ssn   | mgr_start_date |
++----------------+---------+-----------+----------------+
+| Headquarters   |       1 | 888665555 | 1981-05-22     |
+| Administration |       4 | 987654321 | 1995-05-22     |
+| Research       |       5 | 333445555 | 1988-05-22     |
++----------------+---------+-----------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employee(fname,minit,lname,ssn,bdate,address,sex,salary,super_ssn,dno) VALUES
+    -> ('John','B','Smith','123456789','1965-01-09','731 Fondren, Houston, TX','M',30000,'333445555',5),
+    -> ('Franklin','T','Wong','333445555','1955-01-09','638 Fondren, Houston, TX','M',40000,'888665555',5),
+    -> ('Alicia','J','Zelaya','999887777','1968-01-09','3321 Fondren, Houston, TX','F',25000,'987654321',4),
+    -> ('Jennifer','S','Wallace','987654321','1941-01-09','21 Fondren, Houston, TX','F',43000,'888665555',4),
+    -> ('Ramesh','K','Narayan','666884444','1962-01-09','975 Fondren, Houston, TX','M',38000,'333445555',5),
+    -> ('Joyce','A','English','453453453','1972-01-09','5631 Fondren, Houston, TX','F',25000,'333445555',5),
+    -> ('Ahmad','V','Jabbar','987987987','1969-01-09','980 Fondren, Houston, TX','M',25000,'987654321',4),
+    -> ('James','E','Borg','888665555','1937-01-09','450 Fondren, Houston, TX','M',55000,NULL,1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`companydb`.`employee`, CONSTRAINT `fk_super_ssn` FOREIGN KEY (`super_ssn`) REFERENCES `employee` (`ssn`))
+
+
+mysql> insert into employee(fname,minit,lname,ssn,bdate,address,sex,salary,super_ssn,dno) VALUES
+    -> ('James','E','Borg','888665555','1937-01-09','450 Fondren, Houston, TX','M',55000,NULL,1),
+    -> ('Franklin','T','Wong','333445555','1955-01-09','638 Fondren, Houston, TX','M',40000,'888665555',5),
+    -> ('John','B','Smith','123456789','1965-01-09','731 Fondren, Houston, TX','M',30000,'333445555',5),
+    -> ('Jennifer','S','Wallace','987654321','1941-01-09','21 Fondren, Houston, TX','F',43000,'888665555',4),
+    -> ('Alicia','J','Zelaya','999887777','1968-01-09','3321 Fondren, Houston, TX','F',25000,'987654321',4),
+    -> ('Ramesh','K','Narayan','666884444','1962-01-09','975 Fondren, Houston, TX','M',38000,'333445555',5),
+    -> ('Joyce','A','English','453453453','1972-01-09','5631 Fondren, Houston, TX','F',25000,'333445555',5),
+    -> ('Ahmad','V','Jabbar','987987987','1969-01-09','980 Fondren, Houston, TX','M',25000,'987654321',4);
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-01-09 | 980 Fondren, Houston, TX  | M    | 25000.00 | 987654321 |    4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+8 rows in set (0.00 sec)
+
+mysql> 
+
+
+
+insert into dept_locations(dnumber,dlocation) values
+(1, 'Houston'),
+(4, 'Stafford'),
+(5, 'Bellaire'),
+(5, 'Sugarland'),
+(5, 'Houston');
+
+mysql> select * from dept_locations;
++---------+-----------+
+| dnumber | dlocation |
++---------+-----------+
+|       1 | Houston   |
+|       4 | Stafford  |
+|       5 | Bellaire  |
+|       5 | Houston   |
+|       5 | Sugarland |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+
+
+
+mysql> insert into project(pname,pnumber,plocation,dnum) values
+    -> ('ProductX', 1, 'Bellaire', 5),
+    -> ('ProductY', 2, 'Sugarland', 5),
+    -> ('ProductZ', 3, 'Houston', 5),
+    -> ('Computerization', 10, 'Stafford', 4),
+    -> ('Reorganization', 20, 'Houston', 1),
+    -> ('Newbenefits', 30, 'Stafford', 4);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from project;
++-----------------+---------+-----------+------+
+| pname           | pnumber | plocation | dnum |
++-----------------+---------+-----------+------+
+| ProductX        |       1 | Bellaire  |    5 |
+| ProductY        |       2 | Sugarland |    5 |
+| ProductZ        |       3 | Houston   |    5 |
+| Computerization |      10 | Stafford  |    4 |
+| Reorganization  |      20 | Houston   |    1 |
+| Newbenefits     |      30 | Stafford  |    4 |
++-----------------+---------+-----------+------+
+6 rows in set (0.01 sec)
+
+mysql> 
+
+
+
+mysql> insert into works_on (essn, pno, hours) values
+    -> ('123456789', 1, 32.5),
+    -> ('123456789', 2, 7.5),
+    -> ('666884444', 3, 40.0),
+    -> ('453453453', 1, 20.0),
+    -> ('453453453', 2, 20.0),
+    -> ('333445555', 2, 10.0),
+    -> ('333445555', 3, 10.0),
+    -> ('333445555', 10, 10.0),
+    -> ('333445555', 20, 10.0),
+    -> ('999887777', 30, 30.0),
+    -> ('999887777', 10, 10.0),
+    -> ('987987987', 10, 35.0),
+    -> ('987987987', 30, 5.0),
+    -> ('987654321', 30, 20.0),
+    -> ('987654321', 20, 15.0);
+Query OK, 15 rows affected (0.01 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from works_on;
++-----------+-----+-------+
+| essn      | pno | hours |
++-----------+-----+-------+
+| 123456789 |   1 | 32.50 |
+| 123456789 |   2 |  7.50 |
+| 333445555 |   2 | 10.00 |
+| 333445555 |   3 | 10.00 |
+| 333445555 |  10 | 10.00 |
+| 333445555 |  20 | 10.00 |
+| 453453453 |   1 | 20.00 |
+| 453453453 |   2 | 20.00 |
+| 666884444 |   3 | 40.00 |
+| 987654321 |  20 | 15.00 |
+| 987654321 |  30 | 20.00 |
+| 987987987 |  10 | 35.00 |
+| 987987987 |  30 |  5.00 |
+| 999887777 |  10 | 10.00 |
+| 999887777 |  30 | 30.00 |
++-----------+-----+-------+
+15 rows in set (0.00 sec)
+
+mysql> 
+
+
+
+mysql> insert into dependent(essn,dependent_name,sex,bdate,relationship) values
+    -> ('333445555', 'Alice', 'F', '1986-04-05', 'Daughter'),
+    -> ('333445555', 'Theodore', 'M', '1983-04-05', 'Son'),
+    -> ('333445555', 'Joy', 'F', '1958-04-05', 'Spouse'),
+    -> ('987654321', 'Abner', 'M', '1942-04-05', 'Spouse'),
+    -> ('123456789', 'Michael', 'M', '1988-04-05', 'Son'),
+    -> ('123456789', 'Alice', 'M', '1988-04-05', 'Daughter'),
+    -> ('123456789', 'Elizabeth', 'M', '1967-04-05', 'Spouse');
+Query OK, 7 rows affected (0.02 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from dependent;
++-----------+----------------+------+------------+--------------+
+| essn      | dependent_name | sex  | bdate      | relationship |
++-----------+----------------+------+------------+--------------+
+| 123456789 | Alice          | M    | 1988-04-05 | Daughter     |
+| 123456789 | Elizabeth      | M    | 1967-04-05 | Spouse       |
+| 123456789 | Michael        | M    | 1988-04-05 | Son          |
+| 333445555 | Alice          | F    | 1986-04-05 | Daughter     |
+| 333445555 | Joy            | F    | 1958-04-05 | Spouse       |
+| 333445555 | Theodore       | M    | 1983-04-05 | Son          |
+| 987654321 | Abner          | M    | 1942-04-05 | Spouse       |
++-----------+----------------+------+------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+
+
+

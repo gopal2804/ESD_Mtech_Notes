@@ -1,0 +1,622 @@
+(base) gopal@gopal-ROG-Strix-G512LI-G512LI:~$ sudo mysql -u root -p
+[sudo] password for gopal: 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.31-0ubuntu0.20.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select * from employee;
+ERROR 1046 (3D000): No database selected
+mysql> use companydb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from employee;
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-01-09 | 980 Fondren, Houston, TX  | M    | 25000.00 | 987654321 |    4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from department;
++----------------+---------+-----------+----------------+
+| dname          | dnumber | mgr_ssn   | mgr_start_date |
++----------------+---------+-----------+----------------+
+| Headquarters   |       1 | 888665555 | 1981-05-22     |
+| Administration |       4 | 987654321 | 1995-05-22     |
+| Research       |       5 | 333445555 | 1988-05-22     |
++----------------+---------+-----------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from dept_locations;
++---------+-----------+
+| dnumber | dlocation |
++---------+-----------+
+|       1 | Houston   |
+|       4 | Stafford  |
+|       5 | Bellaire  |
+|       5 | Houston   |
+|       5 | Sugarland |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from project;
++-----------------+---------+-----------+------+
+| pname           | pnumber | plocation | dnum |
++-----------------+---------+-----------+------+
+| ProductX        |       1 | Bellaire  |    5 |
+| ProductY        |       2 | Sugarland |    5 |
+| ProductZ        |       3 | Houston   |    5 |
+| Computerization |      10 | Stafford  |    4 |
+| Reorganization  |      20 | Houston   |    1 |
+| Newbenefits     |      30 | Stafford  |    4 |
++-----------------+---------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from works_on;
++-----------+-----+-------+
+| essn      | pno | hours |
++-----------+-----+-------+
+| 123456789 |   1 | 32.50 |
+| 123456789 |   2 |  7.50 |
+| 333445555 |   2 | 10.00 |
+| 333445555 |   3 | 10.00 |
+| 333445555 |  10 | 10.00 |
+| 333445555 |  20 | 10.00 |
+| 453453453 |   1 | 20.00 |
+| 453453453 |   2 | 20.00 |
+| 666884444 |   3 | 40.00 |
+| 987654321 |  20 | 15.00 |
+| 987654321 |  30 | 20.00 |
+| 987987987 |  10 | 35.00 |
+| 987987987 |  30 |  5.00 |
+| 999887777 |  10 | 10.00 |
+| 999887777 |  30 | 30.00 |
++-----------+-----+-------+
+15 rows in set (0.00 sec)
+
+mysql> select * from dependent;
++-----------+----------------+------+------------+--------------+
+| essn      | dependent_name | sex  | bdate      | relationship |
++-----------+----------------+------+------------+--------------+
+| 123456789 | Alice          | M    | 1988-04-05 | Daughter     |
+| 123456789 | Elizabeth      | M    | 1967-04-05 | Spouse       |
+| 123456789 | Michael        | M    | 1988-04-05 | Son          |
+| 333445555 | Alice          | F    | 1986-04-05 | Daughter     |
+| 333445555 | Joy            | F    | 1958-04-05 | Spouse       |
+| 333445555 | Theodore       | M    | 1983-04-05 | Son          |
+| 987654321 | Abner          | M    | 1942-04-05 | Spouse       |
++-----------+----------------+------+------------+--------------+
+7 rows in set (0.00 sec)
+
+
+
+1)RETRIEVE ALL ROWS AND ALL COLUMNS OF EMPLOYEE TABLE
+mysql> select * from employee;
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-01-09 | 980 Fondren, Houston, TX  | M    | 25000.00 | 987654321 |    4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+8 rows in set (0.01 sec)
+
+2)RETRIEVE FIRST NAME AND LAST NAME OF ALL EMPLOYEES
+mysql> select fname as "First Name", lname as "Last Name" from employee;
++------------+-----------+
+| First Name | Last Name |
++------------+-----------+
+| John       | Smith     |
+| Franklin   | Wong      |
+| Joyce      | English   |
+| Ramesh     | Narayan   |
+| James      | Borg      |
+| Jennifer   | Wallace   |
+| Ahmad      | Jabbar    |
+| Alicia     | Zelaya    |
++------------+-----------+
+8 rows in set (0.00 sec)
+
+
+3)RETRIEVE DETAILS OF ALL MALE EMPLOYEES WHO DRAW A SALARY WHICH IS AT LEAST 30000
+mysql> select * from employee where sex='M' and salary>=30000;
++----------+-------+---------+-----------+------------+--------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                  | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+--------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX | M    | 30000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX | M    | 40000.00 | 888665555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX | M    | 55000.00 | NULL      |    1 |
++----------+-------+---------+-----------+------------+--------------------------+------+----------+-----------+------+
+4 rows in set (0.00 sec)
+
+4)RETRIEVE THE DETAILS OF ALL DEPENDENTS OF ESSN 333445555
+mysql> select * from dependent where essn='333445555';
++-----------+----------------+------+------------+--------------+
+| essn      | dependent_name | sex  | bdate      | relationship |
++-----------+----------------+------+------------+--------------+
+| 333445555 | Alice          | F    | 1986-04-05 | Daughter     |
+| 333445555 | Joy            | F    | 1958-04-05 | Spouse       |
+| 333445555 | Theodore       | M    | 1983-04-05 | Son          |
++-----------+----------------+------+------------+--------------+
+3 rows in set (0.00 sec)
+
+5)RETRIEVE DETAILS OF PROJECTS THAT ARE BASED OUT HOUSTON OR STAFFORD 
+mysql> select * from project where plocation='Houston' or plocation='Stafford';
++-----------------+---------+-----------+------+
+| pname           | pnumber | plocation | dnum |
++-----------------+---------+-----------+------+
+| ProductZ        |       3 | Houston   |    5 |
+| Computerization |      10 | Stafford  |    4 |
+| Reorganization  |      20 | Houston   |    1 |
+| Newbenefits     |      30 | Stafford  |    4 |
++-----------------+---------+-----------+------+
+4 rows in set (0.00 sec)
+
+6)RETRIEVE DETAILS OF PROJECTS THAT ARE BASED OUT HOUSTON OR BELONGS TO DEPTARTMENT 4
+mysql> select * from project where plocation='Houston' or dnum=4;
++-----------------+---------+-----------+------+
+| pname           | pnumber | plocation | dnum |
++-----------------+---------+-----------+------+
+| ProductZ        |       3 | Houston   |    5 |
+| Computerization |      10 | Stafford  |    4 |
+| Reorganization  |      20 | Houston   |    1 |
+| Newbenefits     |      30 | Stafford  |    4 |
++-----------------+---------+-----------+------+
+4 rows in set (0.00 sec)
+
+7)Display the name of the department and the year in which the manager was appointed (Hint: Use the YEAR() function YEAR(mgr_start_date))
+mysql> select dname, YEAR(mgr_start_date) from department;
++----------------+----------------------+
+| dname          | YEAR(mgr_start_date) |
++----------------+----------------------+
+| Headquarters   |                 1981 |
+| Administration |                 1995 |
+| Research       |                 1988 |
++----------------+----------------------+
+3 rows in set (0.00 sec)
+
+8)DISPLAY THE SSN OF ALL EMPLOYEES WHO LIVE IN HOUSTON
+mysql> select * from employee where address like '%Houston%';
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-01-09 | 980 Fondren, Houston, TX  | M    | 25000.00 | 987654321 |    4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+8 rows in set (0.00 sec)
+
+9)DISPLAY EMPLOYEES WHOSE NAME BEGINS WITH J
+mysql> select * from employee where fname like 'J%';
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+4 rows in set (0.00 sec)
+
+10)DISPLAY DETAILS OF ALL (MALE EMPLOYEE WHO EARN MORE THAN 30000) OR FEMALE EMPLOYEES WHO EARN LESS THAN 30000)
+mysql> select * from employee where sex='M' and salary>30000 or sex='F' and salary <30000;
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| James    | E     | Borg    | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX  | M    | 55000.00 | NULL      |    1 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+5 rows in set (0.00 sec)
+
+
+11)DISPLAY THE ESSN OF EMPLOYEES WHO HAVE WORKED BETWEN 25 AND 50 HOURS
+mysql> select essn,hours from works_on where hours between 25 and 30;
++-----------+-------+
+| essn      | hours |
++-----------+-------+
+| 999887777 | 30.00 |
++-----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select essn,hours from works_on where hours>=25 and hours<=30;
++-----------+-------+
+| essn      | hours |
++-----------+-------+
+| 999887777 | 30.00 |
++-----------+-------+
+1 row in set (0.00 sec)
+
+12)DISPLAY THE NAMES OF PROJECTS THAT ARE BASED OUT OF HOUSTON OR STAFFORD
+mysql> select pname from project where plocation in ('Houston','Stafford');
++-----------------+
+| pname           |
++-----------------+
+| ProductZ        |
+| Computerization |
+| Reorganization  |
+| Newbenefits     |
++-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select pname from project where plocation='Houston' or plocation='Stafford';
++-----------------+
+| pname           |
++-----------------+
+| ProductZ        |
+| Computerization |
+| Reorganization  |
+| Newbenefits     |
++-----------------+
+4 rows in set (0.00 sec)
+
+13)DISPLAY THE NAMES OF THE PROJECT THAT ARE NEITHER BASED OUT OF HOUSTON NOR OUT OF STAFFORD
+mysql> select pname from project where plocation not in ('Houston','Stafford');
++----------+
+| pname    |
++----------+
+| ProductX |
+| ProductY |
++----------+
+2 rows in set (0.00 sec)
+
+mysql> select pname from project where plocation!='Houston' and  plocation!='Stafford';
++----------+
+| pname    |
++----------+
+| ProductX |
+| ProductY |
++----------+
+2 rows in set (0.00 sec)
+
+14)DISPLAY THE SSN AND FULLY CONCATENATED NAME OF ALL EMPLOYEES	
+mysql> select concat(fname,' ',minit,' ',lname) from employee;
++-----------------------------------+
+| concat(fname,' ',minit,' ',lname) |
++-----------------------------------+
+| John B Smith                      |
+| Franklin T Wong                   |
+| Joyce A English                   |
+| Ramesh K Narayan                  |
+| James E Borg                      |
+| Jennifer S Wallace                |
+| Ahmad V Jabbar                    |
+| Alicia J Zelaya                   |
++-----------------------------------+
+8 rows in set (0.00 sec)
+
+
+15)DISPLAY THE EMPLOYEE DETAILS WHO DOES NOT HAVE SUPERVISOR
+
+mysql> select * from employee where super_ssn is NULL;
++-------+-------+-------+-----------+------------+--------------------------+------+----------+-----------+------+
+| fname | minit | lname | ssn       | bdate      | address                  | sex  | salary   | super_ssn | dno  |
++-------+-------+-------+-----------+------------+--------------------------+------+----------+-----------+------+
+| James | E     | Borg  | 888665555 | 1937-01-09 | 450 Fondren, Houston, TX | M    | 55000.00 | NULL      |    1 |
++-------+-------+-------+-----------+------------+--------------------------+------+----------+-----------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where super_ssn is not NULL;
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| fname    | minit | lname   | ssn       | bdate      | address                   | sex  | salary   | super_ssn | dno  |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+| John     | B     | Smith   | 123456789 | 1965-01-09 | 731 Fondren, Houston, TX  | M    | 30000.00 | 333445555 |    5 |
+| Joyce    | A     | English | 453453453 | 1972-01-09 | 5631 Fondren, Houston, TX | F    | 25000.00 | 333445555 |    5 |
+| Ramesh   | K     | Narayan | 666884444 | 1962-01-09 | 975 Fondren, Houston, TX  | M    | 38000.00 | 333445555 |    5 |
+| Franklin | T     | Wong    | 333445555 | 1955-01-09 | 638 Fondren, Houston, TX  | M    | 40000.00 | 888665555 |    5 |
+| Jennifer | S     | Wallace | 987654321 | 1941-01-09 | 21 Fondren, Houston, TX   | F    | 43000.00 | 888665555 |    4 |
+| Ahmad    | V     | Jabbar  | 987987987 | 1969-01-09 | 980 Fondren, Houston, TX  | M    | 25000.00 | 987654321 |    4 |
+| Alicia   | J     | Zelaya  | 999887777 | 1968-01-09 | 3321 Fondren, Houston, TX | F    | 25000.00 | 987654321 |    4 |
++----------+-------+---------+-----------+------------+---------------------------+------+----------+-----------+------+
+7 rows in set (0.01 sec)
+
+
+16)DISPLAY THE SSN OF EMPLOYEES SORTED BY THEIR SALARY IN ASCENDING MODE
+mysql> select ssn from employee order by salary; (default is ascending)
++-----------+
+| ssn       |
++-----------+
+| 453453453 |
+| 987987987 |
+| 999887777 |
+| 123456789 |
+| 666884444 |
+| 333445555 |
+| 987654321 |
+| 888665555 |
++-----------+
+8 rows in set (0.00 sec)
+
+mysql> select ssn from employee order by salary desc;
++-----------+
+| ssn       |
++-----------+
+| 888665555 |
+| 987654321 |
+| 333445555 |
+| 666884444 |
+| 123456789 |
+| 453453453 |
+| 987987987 |
+| 999887777 |
++-----------+
+8 rows in set (0.00 sec)
+
+
+17)SORT THE WORKS_ON TABLE BASED ON PNO AND HOURS
+mysql> select * from works_on order by pno,hours;
++-----------+-----+-------+
+| essn      | pno | hours |
++-----------+-----+-------+
+| 453453453 |   1 | 20.00 |
+| 123456789 |   1 | 32.50 |
+| 123456789 |   2 |  7.50 |
+| 333445555 |   2 | 10.00 |
+| 453453453 |   2 | 20.00 |
+| 333445555 |   3 | 10.00 |
+| 666884444 |   3 | 40.00 |
+| 333445555 |  10 | 10.00 |
+| 999887777 |  10 | 10.00 |
+| 987987987 |  10 | 35.00 |
+| 333445555 |  20 | 10.00 |
+| 987654321 |  20 | 15.00 |
+| 987987987 |  30 |  5.00 |
+| 987654321 |  30 | 20.00 |
+| 999887777 |  30 | 30.00 |
++-----------+-----+-------+
+15 rows in set (0.00 sec)
+
+mysql> select * from works_on order by pno,hours desc;
++-----------+-----+-------+
+| essn      | pno | hours |
++-----------+-----+-------+
+| 123456789 |   1 | 32.50 |
+| 453453453 |   1 | 20.00 |
+| 453453453 |   2 | 20.00 |
+| 333445555 |   2 | 10.00 |
+| 123456789 |   2 |  7.50 |
+| 666884444 |   3 | 40.00 |
+| 333445555 |   3 | 10.00 |
+| 987987987 |  10 | 35.00 |
+| 333445555 |  10 | 10.00 |
+| 999887777 |  10 | 10.00 |
+| 987654321 |  20 | 15.00 |
+| 333445555 |  20 | 10.00 |
+| 999887777 |  30 | 30.00 |
+| 987654321 |  30 | 20.00 |
+| 987987987 |  30 |  5.00 |
++-----------+-----+-------+
+15 rows in set (0.00 sec)
+
+
+18)DISPLAY THE AVERAGE PROJECT HOURS
+mysql> select avg(hours) as 'Average Project Hours' from works_on;
++-----------------------+
+| Average Project Hours |
++-----------------------+
+|             18.333333 |
++-----------------------+
+1 row in set (0.01 sec)
+
+-- other aggregate functions: min, max, sum
+
+19)DISPLAY THE NUMBER OF EMPLOYEES WHO DO NOT HAVE A MANAGER
+mysql> select count(*) from employee where super_ssn is NULL;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+
+20)WHAT IS THE AVERAGE SALARY OF EMPLOYEES WHO DO NOT HAVE A MANAGER
+mysql> select avg(salary) from employee where super_ssn is NULL;
++--------------+
+| avg(salary)  |
++--------------+
+| 55000.000000 |
++--------------+
+1 row in set (0.00 sec)
+
+
+21)WHAT IS THE HIGHEST SALARY OF FEMALE EMPLOYEES
+mysql> select max(salary) from employee where sex='F';
++-------------+
+| max(salary) |
++-------------+
+|    43000.00 |
++-------------+
+1 row in set (0.01 sec)
+
+
+22)WHAT IS THE LEAST SALARY OF MALE EMPLOYEES
+mysql> select min(salary) from employee where sex='M';
++-------------+
+| min(salary) |
++-------------+
+|    25000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+
+23)DISPLAY THE NUMBER OF EMPLOYEES IN EACH DEPARTMENT
+mysql> select dno, count(*) as "Number of employees"
+    -> from employee
+    -> group by dno;
++------+---------------------+
+| dno  | Number of employees |
++------+---------------------+
+|    1 |                   1 |
+|    4 |                   3 |
+|    5 |                   4 |
++------+---------------------+
+3 rows in set (0.00 sec)
+
+
+24)DISPLAY THE AVERAGE SALARY OF EMPLOYEES (DEPARTMENT-WISE AND GENDER-WISE)
+mysql> select dno,sex,avg(salary) from employee group by dno,sex;
++------+------+--------------+
+| dno  | sex  | avg(salary)  |
++------+------+--------------+
+|    5 | M    | 36000.000000 |
+|    5 | F    | 25000.000000 |
+|    1 | M    | 55000.000000 |
+|    4 | F    | 34000.000000 |
+|    4 | M    | 25000.000000 |
++------+------+--------------+
+5 rows in set (0.01 sec)
+
+
+25)DISPLAY THE NUMBER OF MALE EMPLOYEES IN EACH DEPARTMENT
+mysql> select dno,count(*) from employee where sex='M' group by dno;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|    1 |        1 |
+|    4 |        1 |
+|    5 |        3 |
++------+----------+
+3 rows in set (0.00 sec)
+
+
+26)DISPLAY THE AVERAGE, MINIMUM, MAXIMUM HOURS SPENT IN EACH PROJECT
+mysql> select pno,avg(hours),min(hours),max(hours) from works_on group by pno;
++-----+------------+------------+------------+
+| pno | avg(hours) | min(hours) | max(hours) |
++-----+------------+------------+------------+
+|   1 |  26.250000 |      20.00 |      32.50 |
+|   2 |  12.500000 |       7.50 |      20.00 |
+|   3 |  25.000000 |      10.00 |      40.00 |
+|  10 |  18.333333 |      10.00 |      35.00 |
+|  20 |  12.500000 |      10.00 |      15.00 |
+|  30 |  18.333333 |       5.00 |      30.00 |
++-----+------------+------------+------------+
+6 rows in set (0.00 sec)
+
+
+27)DISPLAY THE YEAR-WISE COUNT OF EMPLOYEES BASED ON THEIR YEAR OF BIRTH
+mysql> select year(bdate), count(*) from employee group by year(bdate) order by year(bdate);
++-------------+----------+
+| year(bdate) | count(*) |
++-------------+----------+
+|        1937 |        1 |
+|        1941 |        1 |
+|        1955 |        1 |
+|        1962 |        1 |
+|        1965 |        1 |
+|        1968 |        1 |
+|        1969 |        1 |
+|        1972 |        1 |
++-------------+----------+
+8 rows in set (0.00 sec)
+
+28)DISPLAY THE DNO OF THOSE DEPARTMENTS THAT HAS AT LEAST 3 EMPLOYEES
+mysql> select dno , count(*) from employee group by dno having count(*)>=3;
++------+----------+
+| dno  | count(*) |
++------+----------+
+|    4 |        3 |
+|    5 |        4 |
++------+----------+
+2 rows in set (0.00 sec)
+
+
+29)AMONG THE PEOPLE WHO DRAW AT LEAST 30000 SALARY, WHAT IS THE DEPARTMENT-WISE AVERAGE?
+mysql> select dno,avg(salary) from employee where salary >=30000 group by dno;
++------+--------------+
+| dno  | avg(salary)  |
++------+--------------+
+|    1 | 55000.000000 |
+|    4 | 43000.000000 |
+|    5 | 36000.000000 |
++------+--------------+
+3 rows in set (0.01 sec)
+
+
+30)AMONG THE DEPARTMENTS THAT HAVE AT LEAST 3 EMPLOYEES, WHAT IS THE DEPARTMENT-WISE AVERAGE SALARY?
+mysql> select dno,avg(salary) from employee group by dno having count(*)>=3;
++------+--------------+
+| dno  | avg(salary)  |
++------+--------------+
+|    4 | 31000.000000 |
+|    5 | 33250.000000 |
++------+--------------+
+2 rows in set (0.00 sec)
+
+
+31)DISPLAY THE FNAME OF EMPLOYEES WORKING IN THE RESEARCH DEPARTMENT
+mysql> select e.fname from employee e, department d where e.dno=d.dnumber and d.dname='Research';
++----------+
+| fname    |
++----------+
+| John     |
+| Franklin |
+| Joyce    |
+| Ramesh   |
++----------+
+4 rows in set (0.00 sec)
+
+mysql> select fname from employee where dno = (select dnumber from department where dname='Research');
++----------+
+| fname    |
++----------+
+| John     |
+| Franklin |
+| Joyce    |
+| Ramesh   |
++----------+
+4 rows in set (0.01 sec)
+
+
+32)DISPLAY THE FNAME AND SALARY OF EMPLOYEES WHOSE SALARY IS MORE THAN THE AVERAGE SALARY OF ALL THE EMPLOYEES
+mysql> select fname,salary from employee where salary > (select avg(salary) from employee);
++----------+----------+
+| fname    | salary   |
++----------+----------+
+| Franklin | 40000.00 |
+| Ramesh   | 38000.00 |
+| James    | 55000.00 |
+| Jennifer | 43000.00 |
++----------+----------+
+4 rows in set (0.00 sec)
+
+
+33)WHICH PROJECT(S) HAVE THE LEAST NUMBER OF EMPLOYEES?
+
+
+
+
+
+
